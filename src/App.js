@@ -136,10 +136,22 @@ function App() {
             </form>
 
             <ul className="cities">
-              <li className="city">New york</li>
-              <li className="city">California</li>
-              <li className="city">Paris</li>
-              <li className="city">Tokyo</li>
+              <li className="city" onClick={()=>{
+                setSearch("New york");
+                setName("New york");
+              }}>New york</li>
+              <li className="city" onClick={()=>{
+                setSearch("California");
+                setName("California");
+              }}>California</li>
+              <li className="city" onClick={()=>{
+                setSearch("Paris");
+                setName("Paris");
+              }}>Paris</li>
+              <li className="city" onClick={()=>{
+                setSearch("Tokyo");
+                setName("Tokyo");
+              }}>Tokyo</li>
             </ul>
 
             <ul className="details">
