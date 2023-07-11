@@ -2,9 +2,56 @@ import react, { useEffect, useState } from "react";
 import './App.css';
 
 function App() {
-  const [city, setCity] = useState(null);
+  const initial = {
+    "coord": {
+      "lon": 70.4167,
+      "lat": 22.5667
+    },
+    "weather": [
+      {
+        "id": 800,
+        "main": "Clear",
+        "description": "clear sky",
+        "icon": "01d"
+      }
+    ],
+    "base": "stations",
+    "main": {
+      "temp": 33.66,
+      "feels_like": 31.79,
+      "temp_min": 33.66,
+      "temp_max": 33.66,
+      "pressure": 1016,
+      "humidity": 22,
+      "sea_level": 1016,
+      "grnd_level": 1012
+    },
+    "visibility": 10000,
+    "wind": {
+      "speed": 6.63,
+      "deg": 30,
+      "gust": 6.57
+    },
+    "clouds": {
+      "all": 0
+    },
+    "dt": 1676192155,
+    "sys": {
+      "type": 1,
+      "id": 9061,
+      "country": "IN",
+      "sunrise": 1676166748,
+      "sunset": 1676207570
+    },
+    "timezone": 19800,
+    "id": 1272699,
+    "name": "Dhrol",
+    "cod": 200
+  }
+  const [city, setCity] = useState(initial);
   const [search, setSearch] = useState("dhrol");
   const [name, setName] = useState("dhrol");
+  
 
   useEffect(() => {
     const fetchApi = async () => {
@@ -16,14 +63,8 @@ function App() {
     }
     fetchApi();
   }, [name])
-
-  let src = "";
   let desc = "Clouds";
-  if (city == null) {
-    src = "http://openweathermap.org/img/wn/04n@2x.png";
-  }
-  else {
-    src = `http://openweathermap.org/img/wn/${city.weather[0].icon}@2x.png`;
+  if (city.cod==="200") {
     if (city.weather[0].id / 100 === 2) {
       desc = "Thunderstorm";
     }
@@ -47,10 +88,9 @@ function App() {
     }
   }
   let backUrl = `images/${desc}.jpeg`;
-
   return (
     <>
-      {!city ? (alert("Enter valid city...")) : (
+      {city.cod ==="404" ? <h1 style={{color:"white"}}>No Data Found</h1> : (
         <div>
           <div className="weather-app" style={{ backgroundImage: `url(${backUrl})` }}>
             <div className="container">
@@ -66,7 +106,7 @@ function App() {
               </div>
 
               <div className="weather">
-                <img src={src}
+                <img src={`http://openweathermap.org/img/wn/${city.weather[0].icon}@2x.png`}
                   className="icon"
                   alt="icon"
                   width="50"
